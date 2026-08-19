@@ -1,1 +1,1 @@
-仅包含项目源代码
+仅包含项目源代码，Client为pico4设备打开的unity客户端，Server为unity作为主机监听，通过websocket连接，MapEditer为实体pico头显下的地图摆放工具
