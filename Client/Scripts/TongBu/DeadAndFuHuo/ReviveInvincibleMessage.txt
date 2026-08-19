@@ -1,0 +1,33 @@
+using System;
+using System.Collections.Generic;
+
+/// <summary>
+/// 玩家无敌状态信息
+/// </summary>
+[Serializable]
+public class InvincibleStateInfo
+{
+    public string playerId;
+    public string playerName;
+    public bool isInvincible;           // 是否无敌
+    public float invincibleCountdown;   // 无敌倒计时（秒）
+}
+
+/// <summary>
+/// 玩家无敌状态广播消息
+/// 服务端 → 所有客户端
+/// type = "InvincibleState"
+/// </summary>
+[Serializable]
+public class InvincibleStateMessage
+{
+    public string type;                           // "InvincibleState"
+    public string roomId;
+    public long timestamp;
+    public List<InvincibleStateInfo> invincibleStates;
+
+    public InvincibleStateMessage( )
+    {
+        invincibleStates = new List<InvincibleStateInfo>();
+    }
+}

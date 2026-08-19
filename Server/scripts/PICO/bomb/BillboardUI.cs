@@ -1,0 +1,46 @@
+using UnityEngine;
+
+/// <summary>  
+/// Billboard UI - 使UI始终面向摄像机  
+/// 此脚本应挂在 Canvas 或 UI 父物体上  
+/// 支持水平翻转调整  
+/// </summary>  
+public class BillboardUI : MonoBehaviour
+{
+    private Camera _mainCamera;
+    private Transform _uiTransform;
+
+    // 新增：水平翻转选项  
+    [SerializeField] private bool flipHorizontal = true;
+
+    void Start()
+    {
+        _mainCamera = Camera.main;
+        _uiTransform = transform;
+
+        if (_mainCamera == null)
+        {
+            Debug.LogError("[BillboardUI] 未找到主摄像机！");
+            enabled = false;
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (_mainCamera == null) return;
+
+        // 计算从UI到摄像机的方向  
+        Vector3 directionToCamera = _mainCamera.transform.position - _uiTransform.position;
+
+        // 让UI面向摄像机  
+        _uiTransform.rotation = Quaternion.LookRotation(directionToCamera);
+
+        // ★ 应用水平翻转  
+        if (flipHorizontal)
+        {
+            Vector3 scale = _uiTransform.localScale;
+            scale.x = -Mathf.Abs(scale.x);  // 强制X轴为负，实现水平翻转  
+            _uiTransform.localScale = scale;
+        }
+    }
+}
